@@ -1,0 +1,37 @@
+{
+    "name": "Schriftstück",
+    "image": "texlive/texlive:latest",
+    
+    "extensions": [
+        "james-yu.latex-workshop"
+    ],
+
+    "settings": {
+        "latex-workshop.view.pdf.viewer": "tab",
+        "latex-workshop.latex.outDir": "%DIR%/build",
+        "latex-workshop.latex.tools": [
+            {
+                "name": "latexmk",
+                "command": "latexmk",
+                "args": [
+                    "--shell-escape",
+                    "-synctex=1",
+                    "-interaction=nonstopmode",
+                    "-file-line-error",
+                    "-pdf",
+                    "-outdir=%OUTDIR%",
+                    "%DOC%"
+                ],
+                "env": {}
+            },
+            {
+                "name": "bibtex",
+                "command": "bibtex",
+                "args": [
+                    "%DOCFILE%"
+                ],
+                "env": {}
+            },
+        ],
+    }
+}
