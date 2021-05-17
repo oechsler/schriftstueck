@@ -1,5 +1,5 @@
 {
-    "name": "Schriftstück",
+    "name": "Schriftstueck",
     "image": "texlive/texlive:latest",
     
     "extensions": [

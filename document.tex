@@ -1,9 +1,9 @@
 % Document class setup
 %--------------------------------------
 \documentclass[
-    paper=A5,
-    fontsize=12pt,
-]{scrartcl}
+    paper    = A4,
+    fontsize = 12pt,
+]{scrreport}
 %--------------------------------------
 
 % German encoding
@@ -17,11 +17,28 @@
 \usepackage[ngerman]{babel}
 %--------------------------------------
 
-% Miscellaneous packages
+% Schriftstueck packages
 %--------------------------------------
-\usepackage{blindtext}
+\usepackage{style/citations}
+\usepackage{style/colors}
+\usepackage{style/pdf}
 %--------------------------------------
 
+\usepackage{bookmark}
+
+\bibliography{document}
+
 \begin{document}
-    \blindtext[2]
+    \chapter{Etwas}
+
+    Blablabla sagte Nobody\footcite[siehe S. 32]{Nobody06}.
+    
+    \newpage
+    \section{Test}
+
+    Etwas Text auf einer neunen Seite schadet keinem.
+    \url{http://example.com}
+
+    \newpage
+    \printbibliography
 \end{document}

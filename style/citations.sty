@@ -1,0 +1,31 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style/citations}[Citations for Schrifstueck]
+
+\usepackage{csquotes}
+
+% BibLaTeX configuration
+%--------------------------------------
+\usepackage[
+    backref = true, 
+    style   = authoryear-comp,
+    sorting = nty,
+]{biblatex}
+%--------------------------------------
+
+% Enable citations with brackets
+%--------------------------------------
+\renewcommand{\bibleftparen}{[}
+\renewcommand{\bibrightparen}{]}
+
+\let\citealt\cite
+\let\cite\parencite
+%--------------------------------------
+
+% Custom cite commands
+%--------------------------------------
+\DeclareCiteCommand{\footcite}
+  {}
+  {\footnote{\cite{\thefield{entrykey}}}}
+  {}
+  {}
+%--------------------------------------
