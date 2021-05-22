@@ -3,7 +3,8 @@
 \documentclass[
     paper    = A4,
     fontsize = 12pt,
-]{scrreport}
+    parskip  = full,
+]{scrarticle}
 %--------------------------------------
 
 % German encoding
@@ -21,23 +22,42 @@
 %--------------------------------------
 \usepackage{style/citations}
 \usepackage{style/colors}
+\usepackage{style/plantuml}
+\usepackage{style/mintedx}
 \usepackage{style/pdf}
 %--------------------------------------
 
+% Languages for listings
+%--------------------------------------
+\deflanguage{kotlin}
+%--------------------------------------
+
+\usepackage{cleveref}
 \usepackage{bookmark}
+\usepackage{setspace}
+
+\title{Advanced Software Engeneering - Snug}
+\author{Samuel Oechsler}
+\date{\today}
 
 \bibliography{document}
 
 \begin{document}
-    \chapter{Etwas}
+    \maketitle
+    \setcounter{page}{0}
+    \thispagestyle{empty}
 
-    Blablabla sagte Nobody\footcite[siehe S. 32]{Nobody06}.
-    
     \newpage
-    \section{Test}
+    \tableofcontents
 
-    Etwas Text auf einer neunen Seite schadet keinem.
-    \url{http://example.com}
+    \begin{spacing}{1.2}
+        \include{clean_architecture.tex}
+        \include{domain_driven_design.tex}
+        \include{programming_principles.tex}
+        \include{entwurfsmuster.tex}
+        \include{refactoring.tex}
+        \include{unit_tests.tex}
+    \end{spacing}
 
     \newpage
     \printbibliography

@@ -1,0 +1,111 @@
+@startuml
+
+class "AuthConfig" {
+  authToken : AuthToken
+}
+
+class "AuthToken" {
+  token : String
+}
+
+class "Config" {
+  authConfig : AuthConfig
+}
+
+class "Container" {
+  name : String
+  image : Image
+  ports : Set<Port>
+}
+
+class "Deployment" {
+  name : String
+  tags : Set<String>
+  replicas : int
+  containers : Set<Container>
+  mounts : Set<Mount>
+  publish : Publish
+}
+
+class "Domain" {
+  host : String
+}
+
+class "Image" {
+  name : String
+  tag : String
+}
+
+class "LoadBalancedDeployment" {
+  name : String
+  ports : Set<Port>
+}
+
+class "LoadBalancer" {
+  name : String
+  deployment : Set<LoadBalancedDeployment>
+}
+
+class "Mount" {
+  name : String
+  type : String
+  path : String
+  permission : String
+}
+
+enum "MountType" {
+  VOLUME
+  CONFIG
+  SECRET
+}
+
+class "Path" {
+  string : String
+}
+
+class "Permission" {
+  user : int
+  group : int
+  everyone : int
+}
+
+class "Port" {
+  name : String
+  source : int
+  destination : int
+}
+
+class "Publish" {
+  ports : Set<Integer>
+  domains : Set<PublishDomains>
+}
+
+class "PublishDomains" {
+  port : int
+  hostnames : Set<String>
+}
+
+class "PublishPort" {
+  port : int
+}
+
+class "Resources" {
+  deployments : Set<Deployment>
+  loadBalancers : Set<LoadBalancer>
+}
+
+class "Size" {
+  quantity : double
+}
+
+class "Storage" {
+  name : String
+  size : String
+  storageClass : String
+}
+
+enum "StorageClass" {
+  DO_BLOCK_STORAGE
+}
+
+@enduml
