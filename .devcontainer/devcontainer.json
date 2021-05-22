@@ -1,10 +1,13 @@
 {
     "name": "Schriftstueck",
-    "image": "texlive/texlive:latest",
+    "dockerFile": "Dockerfile",
     
     "extensions": [
-        "james-yu.latex-workshop"
-    ],
+		"james-yu.latex-workshop",
+		"jebbs.plantuml",
+		"streetsidesoftware.code-spell-checker-german",
+		"streetsidesoftware.code-spell-checker"
+	],
 
     "settings": {
         "latex-workshop.view.pdf.viewer": "tab",
