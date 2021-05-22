@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style/mintedx}[Minted extentions for Schrifstueck]
+
+% Dependecy packaged
+%--------------------------------------
+\usepackage{xpatch}
+\usepackage{letltxmacro}
+%--------------------------------------
+
+% Minted configuration
+%--------------------------------------
+\usepackage[
+    outputdir=build
+]{minted}
+
+\usemintedstyle{vs}
+%--------------------------------------
+
+% Centered minted environment
+%--------------------------------------
+\LetLtxMacro{\cminted}{\minted}
+\let\endcminted\endminted
+\xpretocmd{\cminted}{
+    \RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+}{}{}
+%--------------------------------------
+
+% Quckly define minted environments
+%--------------------------------------
+\newcommand{\deflanguage}[1]{
+    \newminted{#1}{
+        autogobble,
+        xleftmargin=20pt,
+        frame=single,
+        linenos,
+        breaklines,
+        escapeinside=||
+    }
+    \newmintedfile[#1file]{#1}{
+        autogobble,
+        xleftmargin=20pt,
+        frame=single,
+        linenos,
+        breaklines,
+        escapeinside=||
+    }
+}
+%--------------------------------------
