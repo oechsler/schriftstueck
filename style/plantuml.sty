@@ -1,0 +1,10 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style/plantuml}[Plantuml rendering for Schrifstueck]
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+\newcommand{\includeplantuml}[2][]{
+    \immediate\write18{plantuml -teps #2.plantuml}
+    \includegraphics[#1]{#2}
+}
