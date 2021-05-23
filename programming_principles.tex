@@ -1,2 +1,74 @@
 \section{Programming Principals}
 \label{sec:programming_principles}
+
+\subsection{S.O.L.I.D}
+\label{subsec:solid}
+
+Dieser Abschnitt beschäftigt sich mit der Anwendung der in dem Akronym \emph{SOLID} definierten Prinzipien und zeigt auf wo diese innerhalb der Anwendung verwendet werden.
+
+\paragraph{Single-Responsibility-Prinzip}
+
+Für das \emph{Single-Responsibility-Prinzip} lässt sich prinzipiell jede Klasse der Anwendung als Beleg heranziehen, da großen Wert auf dessen Umsetzung gelegt wurde.
+Die einzelnen Klassen haben jeweils nur eine einzige Aufgabe, die sie bearbeiten.
+Konkretisieren lässt sich dies am Beispiel der Klasse \texttt{ContainerBuilder} (siehe \Cref{lst:container_builder}).
+Sie erarbeitet die \emph{Entity} \texttt{Container} und hat keine Bezüge zu anderen nicht für die Erzeugung eines \texttt{Containers} benötigten Funktionalitäten.
+
+\bgroup
+    \kotlinfile{assets/ContainerBuilder.kt}
+
+    \captionof{listing}{Implementierung der Klasse \texttt{ContainerBuilder}, die dem \emph{SRP} folgt}
+    \label{lst:container_builder}
+\egroup
+
+\paragraph{Open-Closed-Prinzip}
+
+Generell ist es so, dass das \emph{Open-Closed-Prinzip} in der Anwendung konkret immer dann zum Einsatz kommt, wenn ein \emph{Service}, oder \emph{Repository} implementiert wird.
+Dieser Einsatzort eignet sich besonders gut für dessen Umsetzung, da hier eine Schnittstelle vorgegeben wird, auf die, begründet durch ihren vermehrten Einsatz, viele Referenzen entstehen. 
+Sie selbst soll nachfolgend im besten Falle keiner Änderung, sondern nur Erweiterung unterliegen.
+Würde man die Schnittstelle ändern und nicht nur erweitern, so müssten alle Stellen an denen Sie verwendet wird nachfolgend auch angepasst werden.
+Diese rekursive Änderungskette lässt sich durch das Prinzip vermeiden.
+
+\paragraph{Liskovsche Substitutionsprinzip}
+
+Die Anwendung verwendet nahe zu keine abgleiten Klassen.
+Für eine konkrete Stelle in der eine Vererbung zum Einsatz kommt wurde sichergestellt, dass das \emph{Liskovsche Substitutionsprinzip} eingehalten wird.
+Der \texttt{StorageBuilder} ist ein Basistyp, der ein generisches Speichermedium erzeugt (siehe \Cref{lst:storage_builder}).
+Hiervon wird dann die spezifische Erzeugung eines konkreten Speichermediums abgeleitet (siehe \Cref{lst:volume_builder}).
+Diese konkreten Speichermedien überschreiben allerdings keine funktionalitäten des Ursprungs, sodass direkt sichergestellt ist, dass das Prinzip eingehalten wird.
+
+\bgroup
+    \kotlinfile{assets/StorageBuilder.kt}
+
+    \captionof{listing}{Der \texttt{StorageBuilder} als Basisklasse für die Erzeugung von Speichermedien}
+    \label{lst:storage_builder}
+\egroup
+
+\bgroup
+    \kotlinfile{assets/VolumeBuilder.kt}
+
+    \captionof{listing}{Der \texttt{VolumeBuilder} als spezifische Ableitung eines \texttt{StorageBuilders}}
+    \label{lst:volume_builder}
+\egroup
+
+\newpage
+
+\paragraph{Interface-Segregation-Prinzip}
+
+Das \emph{Interface-Segregation-Prinzip} wurde im Zuge dieser Anwendung nicht Umgesetzt.
+Als Grund dafür lässt sich auf die in diesem Projekt verwendeten Interfaces verweisen.
+Sie sind meist einfach zu minimal in Ihrem Umfang, als dass hier ein Teil der Schnittstelle ausgelagert werden müsste.
+Zukünftig werden diese allerdings weiter wachsen und somit eine Aufteilung der Interfaces notwendig machen.
+Dann soll an diesen Stellen das Prinzip zum Tragen kommen.
+
+\paragraph{Dependency-Inversion-Prinzip}
+
+Gegeben durch den in der Anwendung verwendeten \emph{Inversion of Control Container} und die damit einhergehende \emph{Dependency Injection} ist das Prinzip der \emph{Dependency-Inversion} immer Angewandt.
+Bei Klassen in denen auf eine im \emph{Container} registrierte Abhänigkeit zugegriffen wird, erfolgt eine \emph{Dependency Injection} über \emph{Properties}.
+Ein Beispiel einer solchen Klasse findet sich im \Cref{lst:apply_command}.
+
+\bgroup
+    \kotlinfile{assets/ApplyCommand.kt}
+
+    \captionof{listing}{Das \texttt{ApplyCommand} zur Anwendung eines Skriptes}
+    \label{lst:apply_command}
+\egroup
