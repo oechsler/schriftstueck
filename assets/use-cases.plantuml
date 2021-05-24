@@ -1,0 +1,169 @@
+@startuml
+
+interface "ApiService" {
+  resource(String) : Lazy<Url>
+}
+
+class "ApiServiceImpl" {
+  rootUrl : String
+  resource(String) : Lazy<Url>
+}
+
+interface "ConfigRepository" {
+  create(Config)
+  delete()
+  retrieve() : Config
+}
+
+class "ConfigRepositoryImpl" {
+  configPath : Path
+  configFile : File
+  serializer : Json
+  create(Config)
+  delete()
+  retrieve() : Config
+}
+
+class "ContainerBuilder" {
+  image : Image
+  ports : Set<Port>
+  name : String
+  image(String, String)
+  ports(Function1<? super it.oechsler.script.language.PortBuilder, Unit>)
+  toContainer() : Container
+}
+
+class "DeploymentBuilder" {
+  replicas$delegate : ReadWriteProperty
+  tags : Set<String>
+  containers : Set<Container>
+  mounts : Set<Mount>
+  publish : Publish
+  name : String
+  apply()
+  container(String, Function1<? super it.oechsler.script.language.ContainerBuilder, Unit>)
+  mounts(Function1<? super it.oechsler.script.language.MountBuilder, Unit>)
+  publish(Function1<? super it.oechsler.script.language.PublishBuilder, Unit>)
+  rollback()
+  tags(String[])
+  toDeployment() : Deployment
+}
+class "ImageBuilder" {
+  name : String
+  tag : String
+  toImage() : Image
+}
+
+class "LoadBalancedDeploymentBuilder" {
+  ports : Set<Port>
+  name : String
+  ports(Function1<? super it.oechsler.script.language.PortBuilder, Unit>)
+  toLoadBalancedDeployment() : LoadBalancedDeployment
+}
+
+class "LoadBalancerBuilder" {
+  loadBalancedDeployments : Set<LoadBalancedDeployment>
+  name : String
+  apply()
+  deployment(String, Function1<? super it.oechsler.script.language.LoadBalancedDeploymentBuilder, Unit>)
+  rollback()
+  toLoadBalancer() : LoadBalancer
+}
+
+class "MountBuilder" {
+  mounts : Set<Mount>
+  volume : MountType
+  config : MountType
+  secret : MountType
+  from(String, MountType) : StorageWithType
+  to(String, PathBuilder) : VolumeWithPath
+  to(StorageWithType, PathBuilder) : StorageWithTypeAndPath
+  toMounts() : Set<Mount>
+  with(VolumeWithPath, PermissionBuilder)
+  with(StorageWithTypeAndPath, PermissionBuilder)
+}
+
+class "PathBuilder" {
+  destination : Path
+}
+
+class "PermissionBuilder" {
+  permission : Permission
+}
+
+class "PortBuilder" {
+  ports : Set<Port>
+  from(String, int) : NameAndSourcePort
+  to(int, int)
+  to(NameAndSourcePort, int)
+  toPorts() : Set<Port>
+}
+
+class "PublishBuilder" {
+  publishDomains : Set<PublishDomains>
+  publishPorts : Set<Integer>
+  domains(int, Function1<? super it.oechsler.script.language.PublishDomainBuilder, Unit>)
+  port(int)
+  toPublish() : Publish
+}
+
+class "PublishDomainBuilder" {
+  hostnamesToPublish : Set<Domain>
+  port : int
+  domain(String)
+  toPublishDomains() : PublishDomains
+}
+
+class "PublishPortBuilder" {
+  port : int
+  toPublishPort() : PublishPort
+}
+
+class "ResourcesBuilder" {
+  resourceGroup : Set<? extends it.oechsler.script.language.Script>
+  apply()
+  deployment(String, Function1<? super it.oechsler.script.language.DeploymentBuilder, Unit>)
+  loadBalancer(String, Function1<? super it.oechsler.script.language.LoadBalancerBuilder, Unit>)
+  rollback()
+  volume(String, Function1<? super it.oechsler.script.language.VolumeBuilder, Unit>)
+}
+
+class "SaveAuthConfigCommand" {
+  authConfig : AuthConfig
+}
+
+class "SaveAuthConfigCommandHandler" {
+  configRepository$delegate : Lazy
+  handle(SaveAuthConfigCommand)
+  handle(Command)
+}
+
+interface "ScriptService" {
+  loadFromPath(Path, KClass<T>) : T
+  loadFromString(String, KClass<T>) : T
+}
+
+class "ScriptServiceImpl" {
+  loadFromPath(Path, KClass<T>) : T
+  loadFromString(String, KClass<T>) : T
+}
+
+class "StorageBuilder" {
+  size : Size
+  name : String
+  storageClass : StorageClass
+  apply()
+  rollback()
+  toStorage() : Storage
+}
+
+class "VolumeBuilder"
+
+"ApiService" <|-- "ApiServiceImpl"
+"ConfigRepository" <|-- "ConfigRepositoryImpl"
+"MountBuilder" --> "PathBuilder" : use
+"SaveAuthConfigCommandHandler" --> "SaveAuthConfigCommand" : use
+"ScriptService" <|-- "ScriptServiceImpl"
+"StorageBuilder" <|-- "VolumeBuilder"
+
+@enduml

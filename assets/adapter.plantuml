@@ -1,0 +1,23 @@
+@startuml
+
+class "ApplyCommand" {
+  scriptService$delegate : Lazy
+  scriptPath$delegate : ReadOnlyProperty
+  run()
+}
+
+class "AuthCommand" {
+  authCommandBus$delegate : Lazy
+  token$delegate : ReadOnlyProperty
+  run()
+}
+
+class "MainCommand"
+
+class "RollbackCommand" {
+  scriptService$delegate : Lazy
+  scriptPath$delegate : ReadOnlyProperty
+  run()
+}
+
+@enduml

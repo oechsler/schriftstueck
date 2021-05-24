@@ -61,6 +61,15 @@ Sie finden sich im Paket \texttt{it.oechsler.script.data}
 \subsection{Applikations-Schicht}
 \label{subsec:appliktions_schicht}
 
+\begin{sidewaysfigure}
+    \centering
+
+    \includeplantuml[width=\textwidth]{assets/use-cases}
+
+    \caption{Klassendiagramm der \emph{Applikations-Schicht}}
+    \label{fig:application}
+\end{sidewaysfigure}
+
 Bei der \emph{Applikations-Schicht}, oder dem \emph{Applikations-Code} handelt es sich konkret um die \emph{Use-Cases} der Anwendung.
 Von bedeutung ist, dass Änderungen an dieser Schicht, keine Änderungen an der \emph{Domänen-Schicht} hervorrufen.
 
@@ -73,6 +82,15 @@ Diese Operationen sind in einem dafür vorgesehenen \emph{Service}, dem \texttt{
 
 \subsection{Adapter-Schicht}
 \label{subsec:adapter_schicht}
+
+\begin{figure}[H]
+    \centering
+
+    \includeplantuml[width=\textwidth]{assets/adapter}
+
+    \caption{Klassendiagramm der \emph{Adapter-Schicht}}
+    \label{fig:adapter}
+\end{figure}
 
 Die \emph{Adapter-Schicht} definiert sich aus den ihr namensgebenden \emph{Adaptern}.
 Es geht hierbei um die abtrennung der \enquote{inneren} und \enquote{äußeren} Schicht der Anwendung.

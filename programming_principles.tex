@@ -72,3 +72,95 @@ Ein Beispiel einer solchen Klasse findet sich im \Cref{lst:apply_command}.
     \captionof{listing}{Das \texttt{ApplyCommand} zur Anwendung eines Skriptes}
     \label{lst:apply_command}
 \egroup
+
+\subsection{G.R.A.S.P}
+\label{subsec:grasp}
+
+\paragraph{Creator-Prinzip}
+
+Das Prinzip eines \emph{Creators} wird im Projekt in Form der \texttt{Builder} Klassen umgesetzt.
+Sie sind im \texttt{it.oechsler.script.language} Paket vorzufinden.
+Ihre Aufgabe ist das Erzeugen eines Datenobjektes im Sinne der Initialisierung wie sie im \emph{Creator-Prinzip} als Möglichkeit vorgegeben wird.
+
+\paragraph{Controller-Prinzip}
+
+Bei den \emph{Controllern} in der Anwendung verhällt es sich so, dass diese nur in minimaler Form vorhanden sind.
+Das liegt daran, dass die Anwendung nur in der \emph{Command Line} ausgeführt wird.
+Daher ergibt sich immer ein linearer Durchlauf pro Befehl.
+Für diese Befehle kommt ein \emph{Framework} zum Einsatz, das die Funktionalitäten mit einer Art von \emph{Controller} konfigurieren lässt.
+Von einer hohe Kohäsion in den \emph{Controllern} lässt sich direkt immer ausgehen, da ein Befehl nur einen Anwendungsbereich abdeckt.
+Ein Beispiel für einen solchen \emph{Controller} wurde bereits in \Cref{lst:apply_command} zuvor gezeigt.
+
+\paragraph{Low-Coupling-Prinzip}
+
+Die Anwendung hällt sich für Abhängigkeiten an das \emph{Low-Coupling}.
+Diese lose Kopplung erfolgt im Projekt durch den \emph{Inversion of Control} \emph{Container} und die damit einhergehende Voraussetzung der Nutzung von \emph{Dependency Injection}.
+Auf Letztes wurde bereits in \Cref{subsec:solid} im Absatz \emph{Dependency-Inversion-Prinzip} eingegangen.
+
+\paragraph{High-Cohesion-Prinzip}
+
+Die im Projekt verwendete Strukturierung der \emph{Use-Cases} erlaubt bereits eine recht hohe Kohäsion zu erreichen.
+Das Projekt gliedert die einzelnen Aspekte in eigene Pakete, oder Module auf, die sich nur wenn wirklich nötig an Funktionalitäten anderer Module bedienen.
+Andernfalls müsste unnötig Code dupliziert werden.
+Neben dieser Maßnahme wurde drauf geachtet, dass eine Klasse nur einen Funktionsbereich abdeckt (siehe \Cref{subsec:solid} im Absatz \emph{Single-Responsibility-Prinzip})
+
+\paragraph{Polymorphismus-Prinzip}
+
+Das Prinzip des \emph{Polymorphismus} kommt im Projekt bei der Erzeugung von Einhängepunkten zum Tragen.
+Im \texttt{MountBuilder} (siehe \Cref{lst:mount_builder}) wird mit hilfe einer extra Klasse dem \texttt{MountType} festgelegt, von welchem Typ ein generischer Einhängepunkt später ist.
+Es ergeben sich also beim hinzufügen neuer Arten von möglichen Einhängeszenarien keine Änderungen am Code.
+
+\bgroup
+    \kotlinfile{assets/MountBuilder.kt}
+
+    \captionof{listing}{Das \texttt{MountBuilder} zur Erzeugung von EInhängepunkten}
+    \label{lst:mount_builder}
+\egroup
+
+\paragraph{Pure-Fabrication-Prinzip}
+
+Am ehesten lässt sich als \emph{Pure Fabrication} im Projekt noch die Modulklassen verargumentieren.
+Sie gehören nicht wirklich in die Anwendungsdomäne und sind Überlegungen um den Einstiegspunkt des Projekte möglichst minimal zu halten.
+Da Kotlin nun aber die möglichkeit bietet sich von dem \enquote{Eine Datei, eine Klasse} Prinzip zu trennen, sehen diese nicht wirklich wie eine Klasse aus.
+Im Kern sind sie jedoch Klassen, da Kotlin nach Java übersetzt wird.
+Das Beispiel im \Cref{lst:module} zeigt eine solche Modulklasse in ihrem Aufbau.
+
+\bgroup
+    \kotlinfile{assets/Module.kt}
+
+    \captionof{listing}{Das \texttt{ScriptModule} als \emph{Pure Fabrication} zur kapselung von Modulen}
+    \label{lst:module}
+\egroup
+
+\paragraph{Indirection-Prinzip}
+
+Eine \emph{Indirection} erreicht die Anwendung in ihrer Architektur durch den Einsatz eines \emph{Mediators} bisher nur für Befehle, die ausreichend komplex sind.
+Das prinzip eines Vermittlers lässt sich aber tendenziell jederzeit Anwenden.
+Allerdings benötigt es dazu definierte \emph{Commands} und \emph{Handler}, welche schnell dafür sorgen unnötig viel \emph{Boilerplate} \emph{Code} zu erzeugen.
+Daher wurde größtenteils darauf verzichtet.
+Nichts desto trotz findet sich im \texttt{AuthCommand} ein Beispiel für die Anwendung des \emph{Indirection-Prinzip} durch den Einsatz eines Vermittlers (siehe \Cref{lst:auth_command}).
+Konkret benannt ist dieser als sogenannter \texttt{CommandBus}.
+
+\bgroup
+    \kotlinfile{assets/AuthCommand.kt}
+
+    \captionof{listing}{Das \texttt{AuthCommand} zur Authentifizierung des benutzers an der \emph{API}}
+    \label{lst:auth_command}
+\egroup
+
+\paragraph{Protected Variations}
+
+Für den Beleg der Verwendung dieses Prinzips lässt sich erneut auf die Verwendung des \emph{Inversion of Control} \emph{Container} zurückgreifen.
+Durch ihn ist gesichert, dass für ein gegebenes Interface jederzeit die eigentliche Implementierung gewechselt werden kann.
+Konkret kommt dies in der Anwendung immer dann zum Einsatz, wenn ein \emph{Repository} oder \emph{Service} definiert wird.
+
+\subsection{D.R.Y}
+\label{subsec:dry}
+
+Im Projekt wurde drauf geachtet, das Prinzip \emph{Do not repeat yourself} anzuwenden.
+Sofern an einer Stelle Code dupliziert werden müsste, wurde versucht eine passende Auslagerung für diesen Fall zu finden.
+Ein Beispiel hierfür findet sich im \texttt{ScriptService} (siehe \Cref{lst:script_service}).
+Hier existieren zwei Methoden.
+Eine ließt den Code von einem gegeben Pfad ein \texttt{loadFromPath(...)}, die andere kann Code aus einem \texttt{String} verarbeiten \texttt{loadFromString(...)}.
+Statt nun den Code zu duplizieren, verwendet die Methode für den Pfad die andere Methode um den gelesenen Code an diese als \texttt{String} weiterzugeben.
+So kommt es zu keinem duplizieren Code an dieser Stelle.

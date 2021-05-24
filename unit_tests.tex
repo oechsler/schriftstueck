@@ -1,2 +1,15 @@
 \section{Unit tests}
 \label{sec:unit_tests}
+
+Für das Projekt wurden insgesamt 29 \emph{Unit Tests} implementiert, die alle samt bisher ihren Bezug auf die von der Anwendung bereitgestellte DSL Sprache legen.
+Sie finden sich im \texttt{test} Modul des Projekts und sind entsprechende ihrer zu testenden Klassen in Pakete gegliedert.
+Andere Teile der Anwendung müssen zukünftig noch mit Tests ausgestattet werden, um auch deren korrektes Verhalten automatisiert zu verifizieren.
+
+Aus den Tests resultiert eine Line Coverage von 49\% insgesamt für das Projekt.
+Spezifisch für das Paket \texttt{it.oechsler.script}, für das die Tests bisher bereitstehen, ist die resultierende Coverage mit 62\% etwas höher.
+
+Zur Umsetzung der \emph{Unit Tests} wurde auf das \emph{Framework} \texttt{kotest}\footnote{\url{https://kotest.io}} zurückgegriffen.
+Es unterstützt verschiedene Stile aus der Welt des automatisierten Testens.
+Spezifisch verwendet wurde der \texttt{DescribeSpec} Stil, welcher vor allem in den \emph{JavaScript} \emph{Test Frameworks}, wie etwa \emph{Jest}\footnote{\url{https://jestjs.io}}, Anwendung findet.
+
+Eine Ausführung der \emph{Unit Tests} wird automatisch beim Erzeugen des \emph{Docker} \emph{Image} angestoßen, kann aber auch mit \emph{Gradle} manuell ausgeführt werden.
