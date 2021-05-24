@@ -82,17 +82,17 @@ Die zu verwendenden Muster sind nachfolgend kurz aufgelistet:
 
 Wie bereits aus der in \Cref{tab:vergleich_tooling_support} hervorgeht, verwendet die Anwendung \emph{Aggregates}.
 Ein konkretes Beispiel hierfür ist die Klasse \texttt{LoadBalancer}.
-Sie Bündelt mehrere \emph{Script} Entitäten zu einem Verbundobjekt, mit dem es möglich wird die Skripte sequenziell auszuführen.
+Sie bündelt mehrere \emph{Script} Entitäten zu einem Verbundobjekt, mit dem es möglich wird die Skripte sequenziell auszuführen.
 Die Bündelung erfolgt in einer Liste von \texttt{Script} Interfaces.
 Ein \texttt{Skript} ist im Rahmen der Domäne eine generische Abbildung einer ausführbaren Programmcode-Datei.
 Das \texttt{Resources} \emph{Aggregate} selbst is ebenfalls ein \texttt{Script}.
 
 Aufgrund der spezifischen Umsetzung in der DSL ist das als \emph{Aggregate} bezeichnete \texttt{Resources} Objekt nicht im Code enthalten und nur fiktiv existent. 
-Wäre die Umsetzung als echtes \emph{Aggregate} erfolg, so könnte die generalisierung auf einen Verbund von \texttt{Script} Objekten, das selbst ein \texttt{Script} ist nicht stattfinden.
+Wäre die Umsetzung als echtes \emph{Aggregate} erfolgt, so könnte die Generalisierung auf einen Verbund von \texttt{Script} Objekten, das selbst ein \texttt{Script} ist nicht stattfinden.
 Hierzu ist es jedoch wichtig zu verstehen wie ein \texttt{Script} genutzt wird.
 Das Interface bietet zwei Methoden an, die spezifisch für das Auführen und das Zurückrollen der Änderungen implementiert sind.
 Diese Methoden haben einen \texttt{void} Rückgabetyp.
-Da jedes \texttt{Script} in sich selbst vollständig Arbeitet müssen die Skripte auch nicht voneinander in Kenntnis gesetzt werden.
+Da jedes \texttt{Script} in sich selbst vollständig arbeitet, müssen die Skripte auch nicht voneinander in Kenntnis gesetzt werden.
 Eine \enquote{Ansammlung} der Skripte muss also nicht stattfinden. 
 Zukünftig wäre allerdings die Sammlung an Ausgaben, die vom Evaluieren des Skriptes zurückkommen und weiterverwendet werden als solches \emph{Aggregate} zu definieren.
 Daher hier das Beispiel.
@@ -107,7 +107,7 @@ Im \Cref{lst:ressources_builder} ist der genaue Aufbau der benannten Thematik vi
 
 \paragraph{Entities} 
 
-Als Solche lässt sich in der Anwendung bisher nur die Konfiguration im Objekt \texttt{Config} (siehe \Cref{lst:config}) klassifizieren, jedoch auch nur entfernt.
+Als solche lässt sich in der Anwendung bisher nur die Konfiguration im Objekt \texttt{Config} (siehe \Cref{lst:config}) klassifizieren, jedoch auch nur entfernt.
 Das liegt daran, dass sich die Konfiguration aufgrund der Natur eines \emph{Commandline Tools} über den Lebenszyklus maximal einmal verändert.
 Anschließend muss vom Benutzer ein neuer Durchlauf der Anwendung angefordert werden mit anderen Bedingungen.
 Lässt man das jedoch außer Acht, so erfüllt das \texttt{Config} die zuvor deklarierten Anforderungen.
@@ -123,7 +123,7 @@ Lässt man das jedoch außer Acht, so erfüllt das \texttt{Config} die zuvor dek
 
 Gemessen an der Definition sind alle für die interne DSL verwendete Datenobjekte \emph{Value Objects} (siehe Paket \texttt{it.oechsler.script.data}).
 Daher folgt an dieser Stelle kein explizites Beispiel.
-Sie jeweils unveränderlich und spiegeln die Identität aus den Eigenschaften ihrer selbst wider.
+Sie sind jeweils unveränderlich und spiegeln die Identität aus den Eigenschaften ihrer selbst wider.
 Zu diesem Schluss führt darüberhinaus, wenn man sich die Funktion der Datenobjekte klar macht.
 Sie bilden das Ergebnis der Transformationen aus dem Programmcode der DSL in die Zielsprache (in diesem Fall JSON).
 Mann kann sie im engeren Sinne mit den Lexemen einer Sprache vergleichen.
@@ -132,8 +132,8 @@ Mann kann sie im engeren Sinne mit den Lexemen einer Sprache vergleichen.
 
 In der Anwendung gibt es mehrere Bereiche in denen spezifische Funktionalitäten (\emph{Use Cases}) gebündelt werden müssen.
 Hierfür kommen dann \emph{Services} zum Einsatz.
-Ein spezigisches Beispiel für solch eine Bündelung von Funktionalität ist der \texttt{ScriptService}.
-Er kapselt den \emph{Use Case} des überführens von Programmcode in Kotlin spezifische Objekte. Das nachfolgende \Cref{lst:script_service} zeigt die Implementierung der gekapselten Funktionalität im \emph{Service}.
+Ein spezifisches Beispiel für solch eine Bündelung von Funktionalität ist der \texttt{ScriptService}.
+Er kapselt den \emph{Use Case} des Überführens von Programmcode in Kotlin spezifische Objekte. Das nachfolgende \Cref{lst:script_service} zeigt die Implementierung der gekapselten Funktionalität im \emph{Service}.
 
 \bgroup
     \kotlinfile{assets/ScriptServiceImpl.kt}
@@ -145,8 +145,8 @@ Er kapselt den \emph{Use Case} des überführens von Programmcode in Kotlin spez
 \paragraph{Repositories}
 
 Dieses Entwurfsmuster wurde auch innerhalb der Anwendung umgesetzt.
-Erneut findet es sich zur verwaltung der Konfiguration und damit im Zuge der \emph{Entity} \texttt{Config} als \texttt{ConfigRepository}.
-Es dient konkret zum abstrahieren der, hier in Form einer Datei vorhandenen, Persistierungsschicht.
+Erneut findet es sich zur Verwaltung der Konfiguration und damit im Zuge der \emph{Entity} \texttt{Config} als \texttt{ConfigRepository}.
+Es dient konkret zum Abstrahieren der, hier in Form einer Datei vorhandenen, Persistierungsschicht.
 Das Beispiel in \Cref*{lst:config_repository} zeigt dessen Implementierung.
 
 \bgroup

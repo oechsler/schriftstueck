@@ -4,12 +4,12 @@
 \subsection{S.O.L.I.D}
 \label{subsec:solid}
 
-Dieser Abschnitt beschäftigt sich mit der Anwendung der in dem Akronym \emph{SOLID} definierten Prinzipien und zeigt auf wo diese innerhalb der Anwendung verwendet werden.
+Dieser Abschnitt beschäftigt sich mit der Anwendung der in dem Akronym \emph{SOLID} definierten Prinzipien und zeigt auf, wo diese innerhalb der Anwendung verwendet werden.
 
 \paragraph{Single-Responsibility-Prinzip}
 
 Für das \emph{Single-Responsibility-Prinzip} lässt sich prinzipiell jede Klasse der Anwendung als Beleg heranziehen, da großen Wert auf dessen Umsetzung gelegt wurde.
-Die einzelnen Klassen haben jeweils nur eine einzige Aufgabe, die sie bearbeiten.
+Die einzelnen Klassen haben jeweils nur eine einzige Aufgabe die sie bearbeiten.
 Konkretisieren lässt sich dies am Beispiel der Klasse \texttt{ContainerBuilder} (siehe \Cref{lst:container_builder}).
 Sie erarbeitet die \emph{Entity} \texttt{Container} und hat keine Bezüge zu anderen nicht für die Erzeugung eines \texttt{Containers} benötigten Funktionalitäten.
 
@@ -34,7 +34,7 @@ Die Anwendung verwendet nahe zu keine abgleiten Klassen.
 Für eine konkrete Stelle in der eine Vererbung zum Einsatz kommt wurde sichergestellt, dass das \emph{Liskovsche Substitutionsprinzip} eingehalten wird.
 Der \texttt{StorageBuilder} ist ein Basistyp, der ein generisches Speichermedium erzeugt (siehe \Cref{lst:storage_builder}).
 Hiervon wird dann die spezifische Erzeugung eines konkreten Speichermediums abgeleitet (siehe \Cref{lst:volume_builder}).
-Diese konkreten Speichermedien überschreiben allerdings keine funktionalitäten des Ursprungs, sodass direkt sichergestellt ist, dass das Prinzip eingehalten wird.
+Diese konkreten Speichermedien überschreiben allerdings keine Funktionalitäten des Ursprungs, sodass direkt sichergestellt ist, dass das Prinzip eingehalten wird.
 
 \bgroup
     \kotlinfile{assets/StorageBuilder.kt}
@@ -54,15 +54,15 @@ Diese konkreten Speichermedien überschreiben allerdings keine funktionalitäten
 
 \paragraph{Interface-Segregation-Prinzip}
 
-Das \emph{Interface-Segregation-Prinzip} wurde im Zuge dieser Anwendung nicht Umgesetzt.
+Das \emph{Interface-Segregation-Prinzip} wurde im Zuge dieser Anwendung nicht umgesetzt.
 Als Grund dafür lässt sich auf die in diesem Projekt verwendeten Interfaces verweisen.
-Sie sind meist einfach zu minimal in Ihrem Umfang, als dass hier ein Teil der Schnittstelle ausgelagert werden müsste.
+Sie sind meist einfach zu minimal in ihrem Umfang, als dass hier ein Teil der Schnittstelle ausgelagert werden müsste.
 Zukünftig werden diese allerdings weiter wachsen und somit eine Aufteilung der Interfaces notwendig machen.
 Dann soll an diesen Stellen das Prinzip zum Tragen kommen.
 
 \paragraph{Dependency-Inversion-Prinzip}
 
-Gegeben durch den in der Anwendung verwendeten \emph{Inversion of Control Container} und die damit einhergehende \emph{Dependency Injection} ist das Prinzip der \emph{Dependency-Inversion} immer Angewandt.
+Gegeben durch den in der Anwendung verwendeten \emph{Inversion of Control Container} und die damit einhergehende \emph{Dependency Injection} ist das Prinzip der \emph{Dependency-Inversion} immer angewandt.
 Bei Klassen in denen auf eine im \emph{Container} registrierte Abhänigkeit zugegriffen wird, erfolgt eine \emph{Dependency Injection} über \emph{Properties}.
 Ein Beispiel einer solchen Klasse findet sich im \Cref{lst:apply_command}.
 
@@ -84,7 +84,7 @@ Ihre Aufgabe ist das Erzeugen eines Datenobjektes im Sinne der Initialisierung w
 
 \paragraph{Controller-Prinzip}
 
-Bei den \emph{Controllern} in der Anwendung verhällt es sich so, dass diese nur in minimaler Form vorhanden sind.
+Bei den \emph{Controllern} in der Anwendung verhält es sich so, dass diese nur in minimaler Form vorhanden sind.
 Das liegt daran, dass die Anwendung nur in der \emph{Command Line} ausgeführt wird.
 Daher ergibt sich immer ein linearer Durchlauf pro Befehl.
 Für diese Befehle kommt ein \emph{Framework} zum Einsatz, das die Funktionalitäten mit einer Art von \emph{Controller} konfigurieren lässt.
@@ -93,7 +93,7 @@ Ein Beispiel für einen solchen \emph{Controller} wurde bereits in \Cref{lst:app
 
 \paragraph{Low-Coupling-Prinzip}
 
-Die Anwendung hällt sich für Abhängigkeiten an das \emph{Low-Coupling}.
+Die Anwendung hält sich für Abhängigkeiten an das \emph{Low-Coupling}.
 Diese lose Kopplung erfolgt im Projekt durch den \emph{Inversion of Control} \emph{Container} und die damit einhergehende Voraussetzung der Nutzung von \emph{Dependency Injection}.
 Auf Letztes wurde bereits in \Cref{subsec:solid} im Absatz \emph{Dependency-Inversion-Prinzip} eingegangen.
 
@@ -107,13 +107,13 @@ Neben dieser Maßnahme wurde drauf geachtet, dass eine Klasse nur einen Funktion
 \paragraph{Polymorphismus-Prinzip}
 
 Das Prinzip des \emph{Polymorphismus} kommt im Projekt bei der Erzeugung von Einhängepunkten zum Tragen.
-Im \texttt{MountBuilder} (siehe \Cref{lst:mount_builder}) wird mit hilfe einer extra Klasse dem \texttt{MountType} festgelegt, von welchem Typ ein generischer Einhängepunkt später ist.
-Es ergeben sich also beim hinzufügen neuer Arten von möglichen Einhängeszenarien keine Änderungen am Code.
+Im \texttt{MountBuilder} (siehe \Cref{lst:mount_builder}) wird mit Hilfe einer extra Klasse dem \texttt{MountType} festgelegt, von welchem Typ ein generischer Einhängepunkt später ist.
+Es ergeben sich also beim Hinzufügen neuer Arten von möglichen Einhängeszenarien keine Änderungen am Code.
 
 \bgroup
     \kotlinfile{assets/MountBuilder.kt}
 
-    \captionof{listing}{Das \texttt{MountBuilder} zur Erzeugung von EInhängepunkten}
+    \captionof{listing}{Das \texttt{MountBuilder} zur Erzeugung von Einhängepunkten}
     \label{lst:mount_builder}
 \egroup
 
@@ -121,21 +121,21 @@ Es ergeben sich also beim hinzufügen neuer Arten von möglichen Einhängeszenar
 
 Am ehesten lässt sich als \emph{Pure Fabrication} im Projekt noch die Modulklassen verargumentieren.
 Sie gehören nicht wirklich in die Anwendungsdomäne und sind Überlegungen um den Einstiegspunkt des Projekte möglichst minimal zu halten.
-Da Kotlin nun aber die möglichkeit bietet sich von dem \enquote{Eine Datei, eine Klasse} Prinzip zu trennen, sehen diese nicht wirklich wie eine Klasse aus.
+Da Kotlin nun aber die Möglichkeit bietet sich von dem \enquote{Eine Datei, eine Klasse} Prinzip zu trennen, sehen diese nicht wirklich wie eine Klasse aus.
 Im Kern sind sie jedoch Klassen, da Kotlin nach Java übersetzt wird.
 Das Beispiel im \Cref{lst:module} zeigt eine solche Modulklasse in ihrem Aufbau.
 
 \bgroup
     \kotlinfile{assets/Module.kt}
 
-    \captionof{listing}{Das \texttt{ScriptModule} als \emph{Pure Fabrication} zur kapselung von Modulen}
+    \captionof{listing}{Das \texttt{ScriptModule} als \emph{Pure Fabrication} zur Kapselung von Modulen}
     \label{lst:module}
 \egroup
 
 \paragraph{Indirection-Prinzip}
 
 Eine \emph{Indirection} erreicht die Anwendung in ihrer Architektur durch den Einsatz eines \emph{Mediators} bisher nur für Befehle, die ausreichend komplex sind.
-Das prinzip eines Vermittlers lässt sich aber tendenziell jederzeit Anwenden.
+Das Prinzip eines Vermittlers lässt sich aber tendenziell jederzeit anwenden.
 Allerdings benötigt es dazu definierte \emph{Commands} und \emph{Handler}, welche schnell dafür sorgen unnötig viel \emph{Boilerplate} \emph{Code} zu erzeugen.
 Daher wurde größtenteils darauf verzichtet.
 Nichts desto trotz findet sich im \texttt{AuthCommand} ein Beispiel für die Anwendung des \emph{Indirection-Prinzip} durch den Einsatz eines Vermittlers (siehe \Cref{lst:auth_command}).
@@ -144,7 +144,7 @@ Konkret benannt ist dieser als sogenannter \texttt{CommandBus}.
 \bgroup
     \kotlinfile{assets/AuthCommand.kt}
 
-    \captionof{listing}{Das \texttt{AuthCommand} zur Authentifizierung des benutzers an der \emph{API}}
+    \captionof{listing}{Das \texttt{AuthCommand} zur Authentifizierung des Benutzers an der \emph{API}}
     \label{lst:auth_command}
 \egroup
 

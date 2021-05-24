@@ -4,18 +4,18 @@
 \subsection{Factory}
 \label{subsec:factory}
 
-Im Projekt lassen sich relativ einfach ein konkretes \emph{Entwurfsmuster} identifizieren.
-Hierbei handelt es sich um das \emph{Factory} \emph{Entwurfsmuster} in for der für die DSL Sprache verwendeten \texttt{Builder} Klassen.
+Im Projekt lässt sich relativ einfach ein konkretes \emph{Entwurfsmuster} identifizieren.
+Hierbei handelt es sich um das \emph{Factory} \emph{Entwurfsmuster} in der für die DSL Sprache verwendeten \texttt{Builder} Klassen.
 
 Sie erzeugen jeweils Datenobjekte spezifisch zu ihrem Zweck.
-Der \texttt{ContainerBuilder} (siehe \Cref{lst:container_builder}) beispielsweise Konsturiert \texttt{Container} Objekte und befüllt diese mit den vom benutzer bereitgestellten Informationen.
+Der \texttt{ContainerBuilder} (siehe \Cref{lst:container_builder}) beispielsweise konsturiert \texttt{Container} Objekte und befüllt diese mit den vom Benutzer bereitgestellten Informationen.
 Anschließend lässt sich das Objekt mit einer Methode zurückgeben.
 Im Falle des \texttt{ContainerBuilder} kann der \texttt{Container} mit der Methode \texttt{toContainer()} erzeugt werden.
 
 Die \texttt{Builder} geben darüberhinaus die Grammatik der internen DSL an und sind ein klassisches Entwurfsmuster für Kotlin DSL Sprachen.
 Das erfolgt durch eine Verzahnung der einzelnen \texttt{Builder} miteinander.
 Für den \texttt{Container} ist es zum Beispiel erforderlich das \texttt{Image} anzugeben.
-Hierfür existiert dann ein weiterer \texttt{Builder}, den der benutzer innerhalb des \texttt{ContainerBuilder} mit einer vorgegeben Methode aufrufen muss.
+Hierfür existiert dann ein weiterer \texttt{Builder}, den der Benutzer innerhalb des \texttt{ContainerBuilder} mit einer vorgegeben Methode aufrufen muss.
 
 \subsection{Decorator}
 \label{subsec:decorator}
@@ -28,4 +28,4 @@ Bisher sind diese Objekte noch unabhängig voneinander.
 
 An dieser Stelle lässt sich zukünftig auf das \emph{Decorator} Entwurfsmuster zurückgreifen.
 Dann würde ein Basisobjekt existieren, von dem weitere \enquote{dekorierte} Objekte abgeleitet wären.
-So ergäbe sich eine wohldefinierte abhängigkeitskette für den Aufbau dieser für die \emph{Short Hand} Syntax verwendeten Typen.
+So ergäbe sich eine wohldefinierte Abhängigkeitskette für den Aufbau dieser für die \emph{Short Hand} Syntax verwendeten Typen.
