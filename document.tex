@@ -1,9 +1,10 @@
 % Document class setup
 %--------------------------------------
 \documentclass[
-    paper=A5,
-    fontsize=12pt,
-]{scrartcl}
+    paper    = A4,
+    fontsize = 12pt,
+    parskip  = full,
+]{scrarticle}
 %--------------------------------------
 
 % German encoding
@@ -17,11 +18,52 @@
 \usepackage[ngerman]{babel}
 %--------------------------------------
 
-% Miscellaneous packages
+\usepackage[hypcap=false]{caption}
+
+% Schriftstueck packages
 %--------------------------------------
-\usepackage{blindtext}
+\usepackage{style/citations}
+\usepackage{style/colors}
+\usepackage{style/plantuml}
+\usepackage{style/mintedx}
+\usepackage{style/pdf}
 %--------------------------------------
 
+\usepackage{rotating}
+\usepackage{bookmark}
+\usepackage{setspace}
+\usepackage{tabulary}
+\usepackage{blindtext}
+\usepackage{cleveref}
+
+% Languages for listings
+%--------------------------------------
+\deflanguage{kotlin}
+%--------------------------------------
+
+\title{Ausarbeitung für Snug}
+\author{Samuel Oechsler}
+\date{\today}
+
+\bibliography{document}
+
 \begin{document}
-    \blindtext[2]
+    \maketitle
+    \setcounter{page}{0}
+    \thispagestyle{empty}
+
+    \newpage
+    \tableofcontents
+
+    \begin{spacing}{1.2}
+        \include{clean_architecture.tex}
+        \include{domain_driven_design.tex}
+        \include{programming_principles.tex}
+        \include{entwurfsmuster.tex}
+        \include{refactoring.tex}
+        \include{unit_tests.tex}
+    \end{spacing}
+
+    \newpage
+    \printbibliography
 \end{document}

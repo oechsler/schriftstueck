@@ -1,0 +1,163 @@
+\section{Clean Architecture}
+\label{sec:clean_architecture}
+
+In diesem Abschnitt sollen die für \emph{Clean Architecture} in diesem Projekt relevanten Schichten definiert werden.
+Diese Schichten sind konkret: \emph{Domänen-}, \emph{Applikations-}, \emph{Adapter-} und \emph{Plugin-Schicht}.
+
+Zusätzlich existiert noch eine \emph{Abstraktions-Code-Schicht}.
+Sie umfasst Grundbausteine, die nicht in dem Bereich der Domäne zugehörig sind.
+Es handelt sich also um sehr abstrakte Konzepte und Algorithmen (etwa Sortieralgorithmus, oder Datenstrukturen).
+Derartige Grundlagen wurden allerdings in dieser Anwendung quasi nicht implementiert, daher wird dieser Bereich in den folgenden Sektionen nicht weiter berücksichtigt und stattdessen direkt auf ihn eingegangen.
+
+Allerdings gibt es in der Anwendung eine Impementierung von \emph{Speichereinheiten}.
+Diese könnten in die Kategorie \emph{Abstraltions-Code} fallen.
+Konkret gemeint ist die Klasse \texttt{Size} aus dem \texttt{it.oechsler.script.data} Paket.
+Sie definiert eine Quantität an Speicher.
+Diese Quantität wird in \emph{Gigabyte} normiert.
+Dies bedeutet konkret: Ist eine Quantität von eins vergben, so entspricht dies einem \emph{Gigabyte}.
+Für Konvertierung zwischen verschiedenen Speichereinheiten existieren daher als Zusatz \emph{Extension Methods} in \texttt{SizeExtensions.kt} im \texttt{it.oechsler.script.extensions} Paket, die es erlauben gängige Primitivtypen möglichst einfach und korrekt in eine \texttt{Size} Quantität zu wandeln.
+
+Da \emph{Speichereinheiten} sich nicht als verändernde Maßeinheiten darstellen, ist es möglich diesen Bereich der Anwendung zum \emph{Abstraktions-Code} zu zählen.
+
+\subsection{Domänen-Schicht}
+\label{subsec:domaenen_schicht}
+
+\begin{figure}[ht]
+    \centering
+
+    \includeplantuml[width=\textwidth]{assets/domain}
+
+    \caption{Klassendiagramm der \emph{Domänen-Schicht}}
+    \label{fig:domain}
+\end{figure}
+
+Bei der \emph{Domänen-Schicht}, oder dem \emph{Domänen-Code} handelt es sich um \emph{Entitäten}, welche die grundlegende Geschäftslogik festlegen.
+Sie bilden den Kern der Anwendung und ändern sich nur äußerst selten.
+
+Die Domäne der Anwendung legt bisher den Fokus auf die implementierte DSL Sprache.
+Daher befinden sich die einzelnen aus den Bausteinen der Sprache transformierten Datenobjekte alle im Bereich des \emph{Domänen-Code}.
+Konkret gemeint sind hiermit die Klassen aus dem Paket \texttt{it.oechsler.script.data}.
+
+Zu diesem Schluss kommt man, wenn man die Betrachtungsweise einer klassischen Anwendung auf die in diesem Projekt definierte Kotlin DSL anwendet.
+Klassische Anwendung nehmen ihre Daten aus den \emph{Adaptern} und verarbeiten diese dann mit den aus der \emph{Domänen-Schicht} hervorgehnden Datenobjekten auf der \emph{Applikations-Schicht}, um sie dann erneut an einen \emph{Adapter} weiterzugeben.\\
+Nichts anderes macht die in diesem Projekt definierte DSL.
+Die Eingabe erfolgt mittels der \emph{Skriptdatei} als Daten und dem \emph{Controller} der \emph{Command Line} als \emph{Adapter}.
+Anschließend werden die im Skript bereitgestellten Daten auf die Datenobjekte der \emph{Domäne} unter Zunahme des \emph{Applikations-Codes} (Grammatik der internen DSL) gebracht.
+Das alles geschieht nun jedoch im Zuge der Ausführung des Skriptes, da es sich bei diesem um Code handelt, der aus einer internen DSL entstammt.
+Letztlicht steht noch die Rückgabe über einen weiteren \emph{Adapter}.
+Da die Ausgabe bisher als \emph{Dump} des erzeugten \emph{JSON} zurück in die \emph{Command Line} erfolgt, wäre der \emph{Adapter} hier der \emph{JSON} \emph{Parser} und der zugehörige \emph{Controller} für die \emph{Command Line}.
+In späteren Versionen kommt an dieser Stelle allerdings eine Schnittselle zum Tragen, mit der die erarbeiteten \emph{JSON} \emph{Objekte} als \emph{Payload} an eine \emph{API} weitergeben werden.
+Der eigentliche \emph{Adapter}.
+Auch diese Schritte erfolgen immer noch im Kontext der Ausführung des jeweiligen Skriptes.
+Allerdings sind die eigentlichen Bausteine hierfür immer innerhalb der Anwendung definiert und nicht im Skript. 
+Das Skript bestimmt also lediglich, in welcher \enquote{Reihenfolge} der \emph{Applikations-Code} zum Tragen kommt.
+
+Neben dem aus der DSL hervorgehnden \emph{Domänen-Code} gibt es darüber hinaus noch einen Anwendungsbereich, der sich mit Identitäten eines Nutzers auseinandersetzt.
+Für diesen existieren ebenfalls eigene Datenobjekte in \texttt{it.oechsler.script.data}, die zum \emph{Domänen-Code} zählen.
+Letztlich steht noch das Modul, welches für die Konfiguration verantwortlich ist.
+Es definiert auch eigne dem \emph{Domänen-Code} zuschreibbare Objekte.
+Sie finden sich im Paket \texttt{it.oechsler.script.data}
+
+\subsection{Applikations-Schicht}
+\label{subsec:appliktions_schicht}
+
+\begin{sidewaysfigure}
+    \centering
+
+    \includeplantuml[width=\textwidth]{assets/use-cases}
+
+    \caption{Klassendiagramm der \emph{Applikations-Schicht}}
+    \label{fig:application}
+\end{sidewaysfigure}
+
+Bei der \emph{Applikations-Schicht}, oder dem \emph{Applikations-Code} handelt es sich konkret um die \emph{Use-Cases} der Anwendung.
+Von Bedeutung ist, dass Änderungen an dieser Schicht, keine Änderungen an der \emph{Domänen-Schicht} hervorrufen.
+
+Für dieses Projekt spezifisch entstehen die einzelnen \emph{Use-Cases} aus den für die Sprache definierten Anforderungen. 
+Indirekt bilden diese dann auch in der Implementierung die Grammatik der DSL Sprache.
+Daher lassen sich alle \emph{Builder} als Teil des \emph{Applikations-Codes} fassen.
+Diese finden sich im Paket \texttt{it.oechsler.script.language}.
+Darüberhinaus existiert auch für die Skripte klassische Geschäftslogik, da Skripte geladen und verwendbar gemacht werden müssen.
+Diese Operationen sind in einem dafür vorgesehenen \emph{Service}, dem \texttt{ScriptService}, bereitgestellt (siehe Paket \texttt{it.oechsler.script.services}).
+
+\subsection{Adapter-Schicht}
+\label{subsec:adapter_schicht}
+
+\begin{figure}[H]
+    \centering
+
+    \includeplantuml[width=\textwidth]{assets/adapter}
+
+    \caption{Klassendiagramm der \emph{Adapter-Schicht}}
+    \label{fig:adapter}
+\end{figure}
+
+Die \emph{Adapter-Schicht} definiert sich aus den ihr namensgebenden \emph{Adaptern}.
+Es geht hierbei um die Abtrennung der \enquote{inneren} und \enquote{äußeren} Schicht der Anwendung.
+Bei den \emph{Adaptern} kann es sich also zum Einen um eine Einheit handeln, welche Daten aus der Eingabe auf den \emph{Domänen-Code} konvertiert (also \emph{mappt}), zum Anderen aber auch um Einheiten, welche die \emph{Plugin-Schicht} konfigurieren. 
+Als Beispiel wäre hier ein \emph{Controller} in einem \emph{MVC} \emph{Framework} zu nennen.
+
+\vspace{5mm}
+\begin{listing}[h]
+    \kotlinfile{assets/noadapter.snug.kts}
+
+    \caption{Beispiel für ein Skript, das die \emph{Adapter} nicht verwendet}
+    \label{lst:noadapter}
+\end{listing}
+\vspace{5mm}
+
+\begin{listing}[h]
+    \kotlinfile{assets/adapter.snug.kts}
+        
+    \caption{Beispiel für ein Skript, das die \emph{Adapter} verwendet}
+    \label{lst:adapter}
+\end{listing}
+\vspace{5mm}
+
+Das Projekt bedient sich konkret bisher nur am Konfigurations-Einsatzzweck der \emph{Adapter-Schicht}, nicht aber an den \emph{Adaptern} zur Formatkonvertierung.
+Das liegt daran, dass eine Konvertierung der Eingabedaten sich als wenig sinnvoll ergibt.
+Die DSL Sprache gibt durch die \emph{Builder} die vom \emph{Adapter} gegebene Funktion im \emph{Application-Code} als deren Operationen wieder.
+Aus diesen gehen dann die konvertierten \emph{Domänen-Code} \emph{Instanzen} hervor.\\
+Das Argument für die Trennung zwischen wenig veränderlichen und stark veränderlichen Schichten, was ja mit den \emph{Adaptern} versucht wird, gilt eh nicht hinreichend für die Sprache. 
+Als Beispiel wäre hier eine Sprachänderung anzuführen.
+Werden etwa neue Grundbausteine in die Sprache als Operationen auf den \emph{Buildern} integriert, so muss sich auch der \emph{Domänen-Code} ändern, da er um \emph{Datenobjekte} erweitert wird.
+Zudem müsste man bei Änderungen am \emph{Adapter}, auch mit Sicherheit etwas an den eigentlichen Operation der Sprache verändern und damit am \emph{Applikations-Code}.
+Außerdem würde das Konzept von Datenobjekten als Eingabe in die DSL die gesamte Syntax nachteilig beeinflussen und diese unnötig komplex machen (siehe hierzu die Beispiele in \Cref{lst:noadapter} und \Cref{lst:adapter}).
+Hier jetzt einen \emph{Adapter} als Konvertierung einzubauen, ist schlicht unsinnig und wurde aus diesem Grund nicht implementiert.
+
+Es existieren allerdings \emph{Adapter} für die einzelnen \emph{Befehle}, welche vom Benutzer aufgerufen werden können.
+Diese \emph{Befehle} werden durch ein auf der \emph{Plugin-Schicht} angesiedeltes \emph{Framework} umgesetzt und mit einer Art minimalistischem \emph{Controller} konfiguriert.
+Konfigurationen für die \emph{Befehle} finden sich in jedem Modul der Anwendung wieder, das Interaktionsmöglichkeiten für den Benutzer auf der \emph{Command Line} anbietet.
+Konkret finden sich die \emph{Controller} für die bisher in der Anwendung existierenden \emph{Befehle} in den folgenden Pakteken:
+
+\begin{itemize}
+    \item \texttt{it.oechsler.script.commands} -- \texttt{ApplyCommand}, \texttt{RollbackCommand}
+    \item \texttt{it.oechsler.identity.commands} -- \texttt{AuthCommand}
+\end{itemize}
+
+\subsection{Plugin-Schicht}
+\label{subsec:plugin_schicht}
+
+Die \emph{Plugin-Schicht} greift nun auf die Elmente aus \emph{Adapter-Schicht} zurück und enthält konkret die \emph{Frameworks}, \emph{Tools} und \emph{Transportmittel}.
+
+Im Falle der Anwendung wurde auf zwei dieser \emph{Plugin} \emph{Frameworks} zurückgegriffen. 
+Beginnend zum Einen mit dem für die \enquote{darstellung} auf der \emph{Command Line} genutzte \texttt{CLI~KT}\footnote{\url{https://ajalt.github.io/clikt/}}.
+Darüberhinaus kommt zum Anderen für die Entkopplung der einzelnen Abhänigkeiten das \emph{Dependency Injection} \emph{Framework} \texttt{Koin}\footnote{\url{https://insert-koin.io}} als \emph{Plugin} zum Einsatz.\\
+Die wichtigste Gegebenheit, die beide erfüllen und warum sie sich zu den \emph{Plugins} zählen lassen, ist ihre Variabilität.
+Problemlos ließen sich die genannten \emph{Frameworks} austauschen, ohne dass hiervon Elemente aus dem Kern der Architektur betroffen wären.
+
+Im Hinblick auf die angesprochenen \emph{Transportmittel}, setzt die Anwendung auf \texttt{Ktor}\footnote{\url{https://ktor.io}}, um später auf externe Schnittstellen per \emph{HTTP} zugreifen zu können (derzeit nur als Abhängigkeit deklariert).
+Darüber hinaus wird intern für die Entkopplung von \emph{Controller} und \emph{Service / Repository} auf \texttt{kdiatR}\footnote{\url{https://github.com/enesacikoglu/kediatR}} gesetzt.
+Es stellt eine Implementierung des \emph{Mediator} \emph{Entwurfsmusters} zur einfachen Verwendung dar.
+Auch hier wäre es theoretisch wieder ermöglicht \enquote{relativ} einfach einen Austausch dieser vorzunehmen, ohne den Kern der Anwendung verändern zu müssen.
+
+Letztlich gibt es jetzt noch eine extern eingebundene Validierung \texttt{valiktor}\footnote{\url{https://github.com/valiktor/valiktor}}.
+Sie trifft nun aufgrund der Feststellung in \Cref{subsec:adapter_schicht} nicht mehr wirklich die Definition \emph{Plugin}.
+Es wäre zwar möglich sie einfach auszutauschen, da sie an sich nur im \emph{Konstruktor} angewandt wird.
+Allerdings ist es so, dass sie auf der \emph{Domänen-Schicht} zum Einsatz kommt.
+Anders ist eine Validierung im Zuge der DSL und \texttt{valiktor} nicht ohne größeren Mehraufwand anwendbar.
+Hier müsste man schlicht weg die Validierung von der eigentlichen \emph{Domänen-Schicht} fernhalten. 
+Was wiederum durch einen \emph{Adapter} sehr einfach möglich wäre.
+Gerade diese haben sich aber als eher unpraktisch für die DSL herausgestellt.
+Letztlich bietet dieser Bereich langfristig definitives Verbesserungspotential was die Einhaltung der \emph{Clean Architecture} angeht.
+Für den Moment kann hier allerdings nicht wirklich besser vorgegangen werden.
