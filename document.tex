@@ -1,69 +1,103 @@
 % Document class setup
 %--------------------------------------
 \documentclass[
-    paper    = A4,
-    fontsize = 12pt,
-    parskip  = full,
-]{scrarticle}
+    a4paper,
+    12pt,
+]{report}
 %--------------------------------------
 
-% German encoding
+% Document metadata
+%--------------------------------------
+\newcommand{\Autor}{Samuel Oechsler}
+\newcommand{\Matrikel}{XXXXXXX}
+\newcommand{\Kurs}{TINFXXBX}
+
+\newcommand{\LogoFirma}{}
+\newcommand{\LogoInstitut}{assets/dhbw-logo}
+
+\newcommand{\FirmenName}{Musterfirma GmbH}
+\newcommand{\FirmenStadt}{Musterstadt}
+
+\newcommand{\BetreuerFirma}{Max Mustermann}
+\newcommand{\BetreuerInstitiut}{Max Mustermann}
+
+\newcommand{\Institut}{Dualen Hochschule Baden-Württemberg Karlsruhe}
+\newcommand{\Abschluss}{Bachelor of Science}
+\newcommand{\Studiengang}{Angewandte Informatik}
+
+\newcommand{\Was}{Bachelorarbeit}
+\newcommand{\Titel}{Lorem ipsum dolor sit amet}
+\newcommand{\Untertitel}{Lorem ipsum dolor sit amet, consetetur sadipscing}
+\newcommand{\AbgabeDatum}{DD. Monat YYYY}
+\newcommand{\Dauer}{DD.MM.YYYY - DD.MM.YYY}
+%--------------------------------------
+
+% Language & encoding
 %--------------------------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-%--------------------------------------
-
-% German language rules
-%--------------------------------------
 \usepackage[ngerman]{babel}
 %--------------------------------------
-
-\usepackage[hypcap=false]{caption}
 
 % Schriftstueck packages
 %--------------------------------------
 \usepackage{style/citations}
 \usepackage{style/colors}
+\usepackage{style/headers}
 \usepackage{style/plantuml}
 \usepackage{style/mintedx}
 \usepackage{style/pdf}
 %--------------------------------------
 
+% Additional packages
+%--------------------------------------
 \usepackage{rotating}
 \usepackage{bookmark}
 \usepackage{setspace}
 \usepackage{tabulary}
 \usepackage{blindtext}
 \usepackage{cleveref}
+%--------------------------------------
 
-% Languages for listings
+% Language defintions for listings
 %--------------------------------------
 \deflanguage{kotlin}
 %--------------------------------------
 
-\title{Ausarbeitung für Snug}
-\author{Samuel Oechsler}
-\date{\today}
-
+% Content
+%--------------------------------------
 \bibliography{document}
 
+%--------------------------------------
 \begin{document}
-    \maketitle
-    \setcounter{page}{0}
-    \thispagestyle{empty}
+    \include{title.tex}
 
-    \newpage
-    \tableofcontents
+    \begin{abstract}
+        \blindtext
+    \end{abstract}
+
+    \include{contents.tex}
 
     \begin{spacing}{1.2}
-        \include{clean_architecture.tex}
-        \include{domain_driven_design.tex}
-        \include{programming_principles.tex}
-        \include{entwurfsmuster.tex}
-        \include{refactoring.tex}
-        \include{unit_tests.tex}
+        \chapter{Ein Kapitel}
+        \blindtext[2]
+        \section{Ein Abschnitt}
+        \blindtext[2]
+
+        \begin{listing}
+            \begin{kotlincode}
+                fun main() {
+
+                }
+            \end{kotlincode}
+            
+            \caption{Main methode eines Kotlin Programms}
+            \label{alg:kotlin_main}
+        \end{listing}
     \end{spacing}
 
     \newpage
+
     \printbibliography
 \end{document}
+%--------------------------------------

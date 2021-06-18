@@ -1,7 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{style/citations}[Citations for Schrifstueck]
 
+\usepackage[hypcap=false]{caption}
 \usepackage{csquotes}
+\usepackage{listing}
 
 % BibLaTeX configuration
 %--------------------------------------
@@ -28,4 +30,15 @@
   {\footnote{\cite{\thefield{entrykey}}}}
   {}
   {}
+%--------------------------------------
+
+% Acronyms
+%--------------------------------------
+\usepackage[printonlyused,withpage]{acronym}
+%--------------------------------------
+
+% Listings title
+%--------------------------------------
+\renewcommand{\listingname}{Algorithmus}
+\renewcommand{\listlistingname}{Liste der Algorithmen}
 %--------------------------------------
