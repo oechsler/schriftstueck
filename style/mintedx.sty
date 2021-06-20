@@ -9,6 +9,7 @@
 
 % Minted configuration
 %--------------------------------------
+\usepackage{listing}
 \usepackage[
     outputdir=build
 ]{minted}
@@ -44,5 +45,16 @@
         breaklines,
         escapeinside=||
     }
+}
+%--------------------------------------
+
+% Listings configuration
+%--------------------------------------
+\renewcommand{\listingscaption}{Algorithmus}
+\renewcommand{\listlistingname}{Liste der Algorithmen}
+
+\AtBeginDocument{
+    \crefname{listing}{Alg.}{Algs.} 
+    \Crefname{listing}{Algorithmus}{Algorithmen}
 }
 %--------------------------------------

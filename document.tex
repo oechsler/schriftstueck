@@ -1,8 +1,11 @@
 % Document class setup
 %--------------------------------------
 \documentclass[
+    ngerman,
     a4paper,
     12pt,
+    pdftex,
+    %disable,
 ]{report}
 %--------------------------------------
 
@@ -25,7 +28,7 @@
 \newcommand{\Abschluss}{Bachelor of Science}
 \newcommand{\Studiengang}{Angewandte Informatik}
 
-\newcommand{\Was}{Bachelorarbeit}
+\newcommand{\Was}{Lorem ipsum}
 \newcommand{\Titel}{Lorem ipsum dolor sit amet}
 \newcommand{\Untertitel}{Lorem ipsum dolor sit amet, consetetur sadipscing}
 \newcommand{\AbgabeDatum}{DD. Monat YYYY}
@@ -36,68 +39,54 @@
 %--------------------------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[ngerman]{babel}
+\usepackage{babel}
 %--------------------------------------
 
 % Schriftstueck packages
 %--------------------------------------
-\usepackage{style/citations}
+\usepackage{style/layout}
 \usepackage{style/colors}
 \usepackage{style/headers}
+\usepackage{style/citations}
 \usepackage{style/plantuml}
 \usepackage{style/mintedx}
 \usepackage{style/pdf}
-%--------------------------------------
-
-% Additional packages
-%--------------------------------------
-\usepackage{rotating}
-\usepackage{bookmark}
-\usepackage{setspace}
-\usepackage{tabulary}
-\usepackage{blindtext}
-\usepackage{cleveref}
+\usepackage{style/todo}
+\usepackage{style/additional}
 %--------------------------------------
 
 % Language defintions for listings
 %--------------------------------------
-\deflanguage{kotlin}
+\deflanguage{go}
 %--------------------------------------
 
-% Content
+% Watermark 
+%--------------------------------------
+\SetWatermarkText{Entwurf}
+\SetWatermarkScale{2}
+%--------------------------------------
+
+% Content structure
 %--------------------------------------
 \bibliography{document}
-
 %--------------------------------------
 \begin{document}
     \include{title.tex}
 
     \begin{abstract}
-        \blindtext
+        \begin{spacing}{1.2}
+            \blindtext
+        \end{spacing}
     \end{abstract}
+
+    \include{disclaimer.tex}
 
     \include{contents.tex}
 
     \begin{spacing}{1.2}
-        \chapter{Ein Kapitel}
-        \blindtext[2]
-        \section{Ein Abschnitt}
-        \blindtext[2]
-
-        \begin{listing}
-            \begin{kotlincode}
-                fun main() {
-
-                }
-            \end{kotlincode}
-            
-            \caption{Main methode eines Kotlin Programms}
-            \label{alg:kotlin_main}
-        \end{listing}
+       \include{example.tex}
     \end{spacing}
 
-    \newpage
-
-    \printbibliography
+    \include{appendix.tex}
 \end{document}
 %--------------------------------------

@@ -3,7 +3,6 @@
 
 \usepackage[hypcap=false]{caption}
 \usepackage{csquotes}
-\usepackage{listing}
 
 % BibLaTeX configuration
 %--------------------------------------
@@ -12,6 +11,10 @@
     style   = authoryear-comp,
     sorting = nty,
 ]{biblatex}
+
+\DefineBibliographyStrings{ngerman}{%
+  bibliography = {Literaturverzeichnis},
+}
 %--------------------------------------
 
 % Enable citations with brackets
@@ -35,10 +38,4 @@
 % Acronyms
 %--------------------------------------
 \usepackage[printonlyused,withpage]{acronym}
-%--------------------------------------
-
-% Listings title
-%--------------------------------------
-\renewcommand{\listingname}{Algorithmus}
-\renewcommand{\listlistingname}{Liste der Algorithmen}
 %--------------------------------------

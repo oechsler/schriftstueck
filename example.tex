@@ -1,0 +1,52 @@
+\chapter{Ein Kapitel}
+\blindtext[2]
+
+\begin{figure}[H]
+    \centering
+
+    \missingfigure{Diagramm für irgendwas}
+    
+    \caption{Ein Diagramm für irgendwas}
+    \label{fig:irgendwas}
+\end{figure}
+
+\section{Ein Abschnitt}
+\blindtext[4]
+
+\begin{listing}[H]
+    \begin{gocode}
+        package main
+
+        import "fmt"
+
+        func main() {
+            fmt.Println("Hello, World")
+        }
+    \end{gocode}
+    
+    \caption{Code für ein \enquote{Hello World} Programm in GO (siehe \cite{go:helloworld_playground})}
+    \label{alg:go_helloworld}
+\end{listing}
+
+Das in \Cref{alg:go_helloworld} dargestellte Codebeispiel kann \ac{z.B.} auch im Text referenziert werden und dazu beitragen, diesen verständlicher zu gestalten.\todo{Text hier noch vervollständigen}
+In diesem Satz wurde \texthl{ein Wort} markeiert, was etwa für Korrekturen interessant ist.
+
+\begin{table}
+    \centering
+    
+    \settowidth\tymin{\texttt{LoadBalancedDeployment}}
+    \begin{tabulary}{\textwidth}{|L|L|} 
+        \hline
+        \textbf{Keyword} & \textbf{Erklärung} \\
+        \hline
+        \texttt{Config}  & Abbildung der Konfigurationsdatei mit allen Sektionen \\
+        \hline
+        \texttt{AuthConfig} & Abschnitt in der \texttt{Config} spezifisch für Authentifizierung \\
+        \hline
+        \texttt{AuthToken} & Token mit dem sich ein Nutzer an der API authentifiziert \\
+        \hline
+    \end{tabulary}
+
+    \caption{Auszug aus der \emph{Ubiquitous Language} einer Anwendung}
+    \label{tab:ubiquitous_language}
+\end{table}
